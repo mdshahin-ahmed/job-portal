@@ -6,10 +6,14 @@ const mongoose = require("mongoose");
 app.use(express.json());
 app.use(cors());
 
+// routes
+const jobRoute = require("./routs/job.route");
+
 app.get("/", (req, res) => {
   res.send("Route is working! YaY!");
 });
 
-// app.use("/api/v1/product", productRoute);
+// posting to detabase
+app.use("/api/v1", jobRoute);
 
 module.exports = app;
