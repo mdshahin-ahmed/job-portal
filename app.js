@@ -8,6 +8,7 @@ app.use(cors());
 
 // routes
 const jobRoute = require("./routs/job.route");
+const userRoute = require("./routs/user.route");
 
 app.get("/", (req, res) => {
   res.send("Route is working! YaY!");
@@ -15,5 +16,6 @@ app.get("/", (req, res) => {
 
 // posting to detabase
 app.use("/api/v1", jobRoute);
+app.use("/api/v1/user", userRoute);
 
 module.exports = app;

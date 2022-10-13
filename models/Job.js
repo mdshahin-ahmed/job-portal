@@ -2,20 +2,24 @@ const mongoose = require("mongoose");
 
 const jobSchema = mongoose.Schema(
   {
-    name: {
+    companyName: {
+      type: String,
+      required: [true, "company name is required"],
+    },
+    title: {
       type: String,
       trim: true,
       maxLength: 100,
       lowercase: true,
-      required: true,
+      required: [true, "title is required"],
     },
     description: {
       type: String,
-      required: true,
+      required: [true, "description is required"],
     },
     skills: {
       type: [String],
-      required: true,
+      required: [true, "skills is required"],
     },
     salary: {
       type: Number,
