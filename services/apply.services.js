@@ -16,6 +16,6 @@ exports.createApplyService = async (data) => {
 
 exports.getAllApplyService = async () => {
   const apply = await Apply.find({});
-  console.log(apply);
+  // console.log(apply);
   return apply;
 };
