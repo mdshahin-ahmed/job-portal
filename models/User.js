@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
+const { ObjectId } = mongoose.Schema.Types;
 
 const userSchema = mongoose.Schema(
   {
@@ -61,9 +63,34 @@ const userSchema = mongoose.Schema(
       default: "active",
       enum: ["active", "inactive", "blocked"],
     },
+    jobs: [
+      {
+        type: ObjectId,
+        ref: "Job",
+      },
+    ],
+    passwordChangAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", function (next) {
+  const password = this.password;
+
+  const hashedPassword = bcrypt.hashSync(password);
+
+  this.password = hashedPassword;
+  this.confirmPassword = undefined;
+
+  next();
+});
+
+userSchema.methods.comparePassword = function (password, hash) {
+  const isPasswordValid = bcrypt.compareSync(password, hash);
+  return isPasswordValid;
+};
 
 const User = mongoose.model("User", userSchema);
 
